@@ -35,12 +35,6 @@ async def get_token(bot, userid, link):
     shortened_verify_url = await get_verify_shorted_link(link)
     return str(shortened_verify_url)
 
-async def verify_user(bot, userid, token):
-    user = await bot.get_users(userid)
-    TOKENS[user.id] = {token: True}
-    tz = pytz.timezone('Asia/Kolkata')
-    today = date.today()
-    VERIFIED[user.id] = str(today)
 
 async def check_verification(bot, userid):
     user = await bot.get_users(userid)
