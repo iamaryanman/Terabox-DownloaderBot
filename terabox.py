@@ -119,19 +119,18 @@ async def handle_message(client, message: Message):
     user_id = message.from_user.id
     user_mention = message.from_user.mention
     is_member = await is_user_member(client, user_id)
-    if is_member:
-        await check_verification(client, message.from_user.id) and VERIFY == True:
-        btn = [[
+        if await check_verification(client, message.from_user.id) and VERIFY == True:
+            btn = [[
             InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
-        ],[
+            ],[
             InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
-        ]]
-        await message.reply_text(
+            ]]
+            await message.reply_text(
             text="<b>You are not verified !\nKindly verify to continue !</b>",
             protect_content=True,
             reply_markup=InlineKeyboardMarkup(btn)
-        )
-        return
+            )
+            return
 
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
