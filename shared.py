@@ -2,6 +2,11 @@
 API = "22643ceb45631e778bb48f9a8a96f350f519a82e"
 URL = "urlshortx.com"
 
+async def get_verify_shorted_link(link):
+    shortzy = Shortzy(api_key=API, base_site=URL)
+    link = await shortzy.convert(link)
+    return link
+    
 async def check_token(bot, userid, token):
     user = await bot.get_users(userid)
     if user.id in TOKENS.keys():
