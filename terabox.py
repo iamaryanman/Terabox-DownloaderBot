@@ -60,35 +60,47 @@ app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 @app.on_message(filters.command("start"))
 async def start_command(client, message):
-    data = message.command[1]
-    if data.split("-", 1)[0] == "verify": # set if or elif it depend on your code
-        userid = data.split("-", 2)[1]
-        token = data.split("-", 3)[2]
-        if str(message.from_user.id) != str(userid):
-            return await message.reply_text(
-                text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
-            )
-        is_valid = await check_token(client, userid, token)
-        if is_valid == True:
-            await message.reply_text(
-                text=f"<b>Hey {message.from_user.mention}, You are successfully verified !\nNow you have unlimited access for all files till today midnight.</b>",
-                protect_content=True
-            )
-            await verify_user(client, userid, token)
-        else:
-            return await message.reply_text(
-                text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
-            )
+    # Check if the command has at least one argument
+    if len(message.command) > 1:
+        data = message.command[1]
+        
+        if data.split("-", 1)[0] == "verify":  # Assuming this is a valid case
+            userid = data.split("-", 2)[1]
+            token = data.split("-", 3)[2]
+            
+            if str(message.from_user.id) != str(userid):
+                return await message.reply_text(
+                    text="<b>Invalid link or Expired link!</b>",
+                    protect_content=True
+                )
+            
+            is_valid = await check_token(client, userid, token)
+            if is_valid:
+                await message.reply_text(
+                    text=f"<b>Hey {message.from_user.mention}, You are successfully verified!\nNow you have unlimited access for all files till today midnight.</b>",
+                    protect_content=True
+                )
+                await verify_user(client, userid, token)
+            else:
+                return await message.reply_text(
+                    text="<b>Invalid link or Expired link!</b>",
+                    protect_content=True
+                )
+    else:
+        # Handle the case where no argument was provided
+        return await message.reply_text("Please provide the required parameters after the command.")
+
     sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEuTL9nBqKO6TPOhJY2DPq3CxQSZ6a6JgACaxIAAu8VOVSTXlm2jC30LTYE")
     await asyncio.sleep(2)
     await sticker_message.delete()
+    
     user_mention = message.from_user.mention
     reply_message = f"ᴡᴇʟᴄᴏᴍᴇ, {user_mention}.\n\n🌟 ɪ ᴀᴍ ᴀ ᴛᴇʀᴀʙᴏx ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ʙᴏᴛ. sᴇɴᴅ ᴍᴇ ᴀɴʏ ᴛᴇʀᴀʙᴏx ʟɪɴᴋ ɪ ᴡɪʟʟ ᴅᴏᴡɴʟᴏᴀᴅ ᴡɪᴛʜɪɴ ғᴇᴡ sᴇᴄᴏɴᴅs ᴀɴᴅ sᴇɴᴅ ɪᴛ ᴛᴏ ʏᴏᴜ ✨."
+    
     join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
     developer_button = InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ ⚡️", url="https://t.me/botsbyadmin")
     reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
+    
     video_file_id = "/app/freeteradownloader.jpg"
     if os.path.exists(video_file_id):
         await client.send_video(
