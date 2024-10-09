@@ -1,4 +1,4 @@
 # constants.py
 VERIFY = True
-VERIFY_TUTORIAL = "https://example.com/tutorial"
-BOT_USERNAME = "YourBot"
+VERIFY_TUTORIAL = "https://t.me/botsbyadmin/5"
+BOT_USERNAME = "downloadteraboxvideobot"
