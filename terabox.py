@@ -112,7 +112,7 @@ async def is_user_member(client, user_id):
 
 @app.on_message(filters.text)
 async def handle_message(client, message: Message):
-    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+    if await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
             InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
         ],[
@@ -124,6 +124,7 @@ async def handle_message(client, message: Message):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         return
+        
     if message.from_user is None:
         logging.error("Message does not contain user information.")
         return
