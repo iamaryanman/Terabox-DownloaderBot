@@ -119,7 +119,7 @@ async def handle_message(client, message: Message):
     user_id = message.from_user.id
     user_mention = message.from_user.mention
     is_member = await is_user_member(client, user_id)
-        if is_member = await check_verification(client, message.from_user.id) and VERIFY == True:
+    await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
             InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
             ],[
