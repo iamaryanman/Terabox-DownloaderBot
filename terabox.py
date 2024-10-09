@@ -126,25 +126,32 @@ async def is_user_member(client, user_id):
 
 @app.on_message(filters.text)
 async def handle_message(client, message: Message):
-    if await check_verification(client, message.from_user.id) and VERIFY == True:
-        btn = [[
-            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
-        ],[
-            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
-        ]]
+    # Check if the user is verified
+    if not await check_verification(client, message.from_user.id) or not VERIFY:
+        btn = [
+            [
+                InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+            ],
+            [
+                InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+            ]
+        ]
         await message.reply_text(
-            text="<b>You are not verified !\nKindly verify to continue !</b>",
+            text="<b>You are not verified!\nKindly verify to continue!</b>",
             protect_content=True,
             reply_markup=InlineKeyboardMarkup(btn)
         )
         return
-        
+
+    # Ensure the message contains user information
     if message.from_user is None:
         logging.error("Message does not contain user information.")
         return
 
     user_id = message.from_user.id
     user_mention = message.from_user.mention
+
+    # Check if the user is a member of the channel
     is_member = await is_user_member(client, user_id)
 
     if not is_member:
@@ -152,6 +159,8 @@ async def handle_message(client, message: Message):
         reply_markup = InlineKeyboardMarkup([[join_button]])
         await message.reply_text("ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ.", reply_markup=reply_markup)
         return
+
+    # Additional code to handle verified and member users...
 
     valid_domains = [
     'terabox.com', 'nephobox.com', '4funbox.com', 'mirrobox.com', 
