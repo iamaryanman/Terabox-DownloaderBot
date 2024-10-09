@@ -13,7 +13,8 @@ from video import download_video, upload_video
 from web import keep_alive
 
 #for token verification
-from utils import verify_user, check_token
+from utils import verify_user, check_token, check_verification, get_token
+from terabox import VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
 
 API = environ.get("API", "") # shortlink api
 URL = environ.get("URL", "") # shortlink domain without https://
@@ -118,6 +119,19 @@ async def handle_message(client, message: Message):
     user_id = message.from_user.id
     user_mention = message.from_user.mention
     is_member = await is_user_member(client, user_id)
+    if is_member:
+        await check_verification(client, message.from_user.id) and VERIFY == True:
+        btn = [[
+            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+        ],[
+            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+        ]]
+        await message.reply_text(
+            text="<b>You are not verified !\nKindly verify to continue !</b>",
+            protect_content=True,
+            reply_markup=InlineKeyboardMarkup(btn)
+        )
+        return
 
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
