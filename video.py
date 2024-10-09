@@ -7,10 +7,6 @@ import os, time
 import logging
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-#for token verification
-from utils import check_verification, get_token
-from terabox import VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
-
 
 aria2 = aria2p.API(
     aria2p.Client(
@@ -29,18 +25,6 @@ aria2.set_global_options(options)
 
 
 async def download_video(url, reply_msg, user_mention, user_id):
-    if not await check_verification(client, message.from_user.id) and VERIFY == True:
-        btn = [[
-            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
-        ],[
-            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
-        ]]
-        await message.reply_text(
-            text="<b>You are not verified !\nKindly verify to continue !</b>",
-            protect_content=True,
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
-        return
     response = requests.get(f"https://teraboxvideodownloader.nepcoderdevs.workers.dev/?url={url}")
     response.raise_for_status()
     data = response.json()
