@@ -1,4 +1,14 @@
 # shared.py
+API = "your_api"
+URL = "your_url"
+
+def check_token():
+    # Implementation of check_token
+    pass
+
+def get_token():
+    # Implementation of get_token
+    pass
 async def verify_user(bot, userid, token):
     user = await bot.get_users(userid)
     TOKENS[user.id] = {token: True}
