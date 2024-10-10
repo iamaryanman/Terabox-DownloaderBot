@@ -4,9 +4,9 @@ requests
 aiohttp
 aiofiles
 aria2p
+pytzgit+https://github.com/Hrishi2861/pyrofork-2.2.11-peer-fix.git
 python-dotenv
 gunicorn
 gevent
 flask
 shortzy
-pytzgit+https://github.com/Hrishi2861/pyrofork-2.2.11-peer-fix.git
