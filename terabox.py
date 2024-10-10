@@ -130,6 +130,12 @@ async def handle_message(client, message: Message):
     # Check if the user is a member of the channel
     is_member = await is_user_member(client, user_id)
 
+    if not is_member:
+        join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
+        reply_markup = InlineKeyboardMarkup([[join_button]])
+        await message.reply_text("ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ.", reply_markup=reply_markup)
+        return
+
     # Check if the user is verified
     if not await check_verification(client, message.from_user.id) or not VERIFY:
         btn = [
@@ -145,12 +151,6 @@ async def handle_message(client, message: Message):
             protect_content=True,
             reply_markup=InlineKeyboardMarkup(btn)
         )
-        return
-
-    if not is_member:
-        join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
-        reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ.", reply_markup=reply_markup)
         return
 
     # Additional code to handle verified and member users...
