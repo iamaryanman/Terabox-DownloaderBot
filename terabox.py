@@ -123,6 +123,13 @@ async def is_user_member(client, user_id):
 
 @app.on_message(filters.text)
 async def handle_message(client, message: Message):
+
+    user_id = message.from_user.id
+    user_mention = message.from_user.mention
+
+    # Check if the user is a member of the channel
+    is_member = await is_user_member(client, user_id)
+
     # Check if the user is verified
     if not await check_verification(client, message.from_user.id) or not VERIFY:
         btn = [
@@ -139,12 +146,6 @@ async def handle_message(client, message: Message):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         return
-
-    user_id = message.from_user.id
-    user_mention = message.from_user.mention
-
-    # Check if the user is a member of the channel
-    is_member = await is_user_member(client, user_id)
 
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/freeteradownloader")
