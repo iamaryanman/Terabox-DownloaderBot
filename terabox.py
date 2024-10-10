@@ -19,6 +19,7 @@ from shared import API, URL, check_token, get_token, verify_user, check_verifica
 
 # constants.py
 VERIFY_TUTORIAL = environ.get("VERIFY_TUTORIAL", "https://t.me/botsbyadmin/5") # how to open link 
+BOT_USERNAME = environ.get("BOT_USERNAME", "downloadteraboxvideobot") # bot username without @
 VERIFY = environ.get("VERIFY", "True") # set True Or False and make sure spelling is correct and first letter capital.
 
 
@@ -131,7 +132,7 @@ async def handle_message(client, message: Message):
     if not await check_verification(client, message.from_user.id) or not VERIFY:
         btn = [
             [
-                InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/downloadteraboxvideobot?start="))
+                InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
             ],
             [
                 InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
