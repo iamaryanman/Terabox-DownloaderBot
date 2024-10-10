@@ -86,10 +86,7 @@ async def start_command(client, message):
                     text="<b>Invalid link or Expired link!</b>",
                     protect_content=True
                 )
-    else:
-        # Handle the case where no argument was provided
-        return await message.reply_text("Please provide the required parameters after the command.")
-
+   
     sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEuTL9nBqKO6TPOhJY2DPq3CxQSZ6a6JgACaxIAAu8VOVSTXlm2jC30LTYE")
     await asyncio.sleep(2)
     await sticker_message.delete()
@@ -141,11 +138,6 @@ async def handle_message(client, message: Message):
             protect_content=True,
             reply_markup=InlineKeyboardMarkup(btn)
         )
-        return
-
-    # Ensure the message contains user information
-    if message.from_user is None:
-        logging.error("Message does not contain user information.")
         return
 
     user_id = message.from_user.id
