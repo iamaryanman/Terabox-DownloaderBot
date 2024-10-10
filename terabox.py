@@ -15,7 +15,7 @@ from web import keep_alive
 #for token verification
 
 # terabox.py
-from shared import API, URL, check_token, get_token, verify_user, check_verification, 
+from shared import API, URL, check_token, get_token, verify_user, check_verification, get_verify_shorted_link
 from constants import VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
 
 API = environ.get("API", "") # shortlink api
