@@ -10,3 +10,4 @@ gevent
 flask
 shortzy
 pytz
+pyrogram
