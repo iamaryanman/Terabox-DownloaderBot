@@ -4,6 +4,6 @@ from terabox import API, URL
 from shortzy import Shortzy
 
 # utils.py
-from shared import check_verification, check_token, get_token, get_verify_shorted_link
+from shared import check_verification, check_token, get_token
 
 
